@@ -1,0 +1,21 @@
+{
+    "manifest_version": 3,
+    "name": "Custom Magnifying and Contrast Extension",
+    "version": "1.0",
+    "description": "An extension to magnify, adjust color contrast, and change background color of websites.",
+    "permissions": ["activeTab", "scripting"],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "magnify-icon.png",
+        "48": "magnify-icon.png",
+        "128": "magnify-icon.png"
+      }
+    },
+    "icons": {
+      "16": "magnify-icon.png",
+      "48": "magnify-icon.png",
+      "128": "magnify-icon.png"
+    }
+  }
+  

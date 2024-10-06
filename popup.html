@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div id="controls">
+        <div class="Magnification">
+            <button id="magnify" style="font-size: larger;">A</button>
+            <button id="reduce"style="font-size:smaller">A</button>
+        </div>
+       <br>
+       <div class="contrast">
+        <label for="contrast">Contrast:</label>
+        <button id="contrastIncrease">+</button>
+        <button id="contrastDecrease">-</button>
+        <input type="range" id="contrast" min="0.5" max="2" step="0.1" value="1">
+       </div>
+        <br>
+    <div class="color modifier">
+        <label for="bgcolor">Background Color:</label>
+        <input type="color" id="bgcolor" value="#F4F4F9">
+    </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
