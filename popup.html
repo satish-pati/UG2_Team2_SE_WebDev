@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Face Recognition</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    video {
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      width: 320px;
+      height: 240px;
+      background-color: black; /* Add a background to verify if video element is rendering */
+    }
+    #error-message {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Login with Face Recognition</h1>
+  <video id="video" autoplay></video>
+  <p id="error-message"></p>
+  <button id="start-btn">Start Recognition</button>
+  <script src="popup.js"></script>
+</body>
+</html>
