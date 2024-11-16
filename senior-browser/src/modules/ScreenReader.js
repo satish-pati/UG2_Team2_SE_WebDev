@@ -68,6 +68,7 @@ let isReading = false; // variable to track reading state
 let currentSection = null; // variable to track the section being read
 // Function to read the page content
 function readPageContent() {
+    showStopReadingButton();
     const topStoriesSection = document.querySelectorAll('.N54PNb BToiNc,.kb0PBd cvP2Ce A9Y9g,.VwiC3b yXK7lf lVm3ye r025kc hJNv6b Hdw6tb,.kb0PBd A9Y9g,.N54PNb BToiNc cvP2Ce,n0jPhd ynAwRc tNxQIb nDgy9d,.n0jPhd ynAwRc tNxQIb nDgy9d,.SoAPf,.lSfe4c O5OgBe M9rH0b dWgpFe,.xrnccd, .VDXfz, .ZINbbc, .iHxmLe, .KYaZsb,.N54PNb,.N54PNb,article, h3, h4, h5, h6, .xrnccd, .VDXfz, .ZINbbc');
     let bodyText = '';
     let sectionsToRead = []; // to store sections without negative words
@@ -95,29 +96,24 @@ function readPageContent() {
             // Get the current section
             currentSection = sectionsToRead[currentIndex];
             const utterance = new SpeechSynthesisUtterance(currentSection.innerText);
-
             // Highlight the current section
             highlightCurrentSection(currentSection);
-
             // Show current reading text on screen
             displayCurrentText(currentSection.innerText);
-
             // Start reading
             window.speechSynthesis.speak(utterance);
             isReading = true;
-            button.textContent = 'Stop Reading';
-
+           // button.textContent = 'Stop Reading';
             // When speech ends, move to the next section
             utterance.onend = () => {
                 currentIndex++;
                 speakNextSection(); // Recursively speak the next section
             };
         }
-
         // Start reading the first section
         speakNextSection();
     } else {
-        alert("No content found to read that isn't blurred or negative.");
+        alert("No content found to read that ");
     }
 }
 // Function to highlight the current section
@@ -161,13 +157,14 @@ function displayCurrentText(text) {
 function stopReading() {
     window.speechSynthesis.cancel();
     isReading = false; // Update state
-    button.textContent = 'Read Content'; // Reset button text
+    //button.textContent = 'Read Content'; // Reset button text
 
     // Remove the highlight from the last section
     if (currentSection) {
         currentSection.style.backgroundColor = '';
         currentSection = null;
     }
+    removeStopReadingButton();
 
     // Remove the reading text display
     const readingBox = document.getElementById('readingBox');
@@ -175,6 +172,7 @@ function stopReading() {
         document.body.removeChild(readingBox);
     }
 }
+/*
 
 // Button setup
 const button = document.createElement('button');
@@ -199,4 +197,32 @@ button.addEventListener('click', () => {
     } else {
         readPageContent();
     }
-});
+});*/
+   
+
+function showStopReadingButton() {
+   
+    stopReadingButton = document.createElement('button');
+    stopReadingButton.innerText = "Stop Reading";
+    stopReadingButton.style.position = 'fixed';
+    stopReadingButton.style.top = '10px';
+    stopReadingButton.style.left = '10px';
+    stopReadingButton.style.zIndex = 10000;
+    stopReadingButton.style.padding = '10px 20px';
+    stopReadingButton.style.fontSize = '16px';
+    stopReadingButton.style.backgroundColor = '#FF6347';
+    stopReadingButton.style.color = '#FFF';
+    stopReadingButton.style.border = 'none';
+    stopReadingButton.style.borderRadius = '5px';
+    stopReadingButton.style.cursor = 'pointer';
+    stopReadingButton.addEventListener('click', stopReading);
+    document.body.appendChild(stopReadingButton);
+
+}
+
+function removeStopReadingButton() {
+if (stopReadingButton) {
+    stopReadingButton.remove(); // Remove the stop button
+    stopReadingButton = null;
+}
+}
