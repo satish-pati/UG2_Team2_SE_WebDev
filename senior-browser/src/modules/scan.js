@@ -2,8 +2,7 @@ const API_KEY = "AIzaSyBkdme9ZDgSxCxuKlXZwZjPVlqCJoXGtiA"; // Replace this with 
 
 // Function to check if the site uses HTTPS
 function checkHTTPS(url) {
-    const baseUrl = new URL(url);  // Create a URL object
-    return baseUrl.protocol == "https:";  // Check the protocol
+    return url.startsWith("https://");
 }
 
 // Function to check website security using Safe Browsing API
@@ -24,9 +23,7 @@ async function checkWebsiteSecurity(url) {
             ]
         }
     };
-    function toggleSecurityScan() {
-        chrome.runtime.sendMessage({ action: 'opensecscan' });
-    }
+
     const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -44,26 +41,34 @@ async function checkWebsiteSecurity(url) {
     }
 }
 
-document.getElementById("scanButton").addEventListener("click", async () => {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    
-    // Check if the website uses HTTPS
-    if (!checkHTTPS(tab.url)) {
-        document.getElementById("status").innerText = "This website is safe!";
-        document.getElementById("status").style.color = "green";
-    } else {
-      
-        const securityStatus = await checkWebsiteSecurity(tab.url);
+// Extract URL from the query parameter when the page loads
+document.getElementById("scanButton").addEventListener("click", async () =>  {
+    const params = new URLSearchParams(window.location.search);
+    const pageUrl = params.get('url');
 
-        if (securityStatus === "safe") {
-            document.getElementById("status").innerText = "This website is safe!";
-            document.getElementById("status").style.color = "green";
-        } else if (securityStatus === "unsafe") {
-            document.getElementById("status").innerText = "Warning: This website may be unsafe!";
+    if (pageUrl) {
+        document.getElementById("status").innerText = `Checking security for: ${pageUrl}`;
+
+        // Check if the website uses HTTPS
+        if (!checkHTTPS(pageUrl)) {
+            document.getElementById("status").innerText = "Warning: This website is using HTTP and is not secure!";
             document.getElementById("status").style.color = "red";
         } else {
-            document.getElementById("status").innerText = "This website is safe!";
-            document.getElementById("status").style.color = "green";
+            const securityStatus = await checkWebsiteSecurity(pageUrl);
+
+            if (securityStatus === "safe") {
+                document.getElementById("status").innerText = "This website is safe!";
+                document.getElementById("status").style.color = "green";
+            } else if (securityStatus === "unsafe") {
+                document.getElementById("status").innerText = "Warning: This website may be unsafe!";
+                document.getElementById("status").style.color = "red";
+            } else {
+                document.getElementById("status").innerText = "Error checking website security.";
+                document.getElementById("status").style.color = "orange";
+            }
         }
+    } else {
+        document.getElementById("status").innerText = "Error: URL not provided.";
+        document.getElementById("status").style.color = "orange";
     }
 });
