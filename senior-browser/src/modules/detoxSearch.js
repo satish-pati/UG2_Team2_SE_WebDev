@@ -98,8 +98,10 @@ const blurNegnews = () =>{
       const result2 = document.querySelectorAll('.KYaZsb');
     const topHeadlines = document.querySelectorAll(".n0jPhd.ynAwRc.tNxQIb.nDgy9d"); 
     const topDescription = document.querySelectorAll(".SoAPf"); 
-    const allNewstext = [...headlines, ...newsDescription, ... topHeadlines, ...topDescription,...result,...result2];
+    const t = document.querySelectorAll(".b_algo"); 
+    const v= document.querySelectorAll(".mc_vtvc b_canvas mc_vtvc_cc  creator"); 
 
+    const allNewstext = [...headlines, ...newsDescription,  ...topDescription,...result,...result2,...t,...v];
     allNewstext.forEach((box) => {
         const newsText = box.innerText;
         if (containsNegtext(newsText)) {
@@ -169,13 +171,13 @@ styleboxes.innerHTML = `
     .negtextbox button {
         margin-top: 10px;
         padding: 5px 10px;
-        background-color: #add8e6;
+        background-color: ##ff6a88;
         border: none;
         border-radius: 3px;
         cursor: pointer;
     }
     .negtextbox button:hover {
-        background-color: #87ceeb;
+        background-color: #ff6a88;
     }
     .postivetext {
         text-align: center;
@@ -183,6 +185,22 @@ styleboxes.innerHTML = `
         font-size: 1.5em;
         color: #add8e6;
     }
+        .negtextbox .showcontent {
+    color: #333; /* Set text color explicitly */
+    background-color: #add8e6; /* Light blue background */
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+}
+
+.negtextbox .showcontent:hover {
+    background-color: #87ceeb; /* Slightly darker blue on hover */
+    color: #333; /* Ensure text color remains consistent */
+}
+
 `;
 document.head.appendChild(styleboxes);
 const positiveMsg = document.createElement('div');
