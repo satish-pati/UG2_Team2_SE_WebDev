@@ -23,12 +23,13 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.21.1",
+    "fs": "^0.0.1-security",
     "mongodb": "^6.10.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tesseract.js": "^5.1.1",
-     "bcryptjs": "^2.4.3"
+    "tesseract.js": "^5.1.1"
   }
 }
